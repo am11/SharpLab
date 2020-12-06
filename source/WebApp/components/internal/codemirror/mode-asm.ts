@@ -23,10 +23,50 @@ CodeMirror.defineMode('asm', () => {
             'sahf', 'sal', 'sar', 'sbb', 'scas[bdw]', conditional('set'), 's[gil]dt', 'shld?', 'shrd?', 'smsw', 'st[cdi]', 'stos[bdw]', 'str', 'sub', 'syscall', 'sysenter', 'sysexit', 'sysret',
             'test',
             'ud2',
-            'verr', 'verw',
-            'vmovdqu', 'vmovdqu8', 'vmovdqu16', 'vmovdqu32', 'vxorps',
+            'vcvtsi2ss', 'vcvtss2sd', 'verr', 'verw',
+            'vmovdqu', 'vmovdqu8', 'vmovdqu16', 'vmovdqu32', 'vmovsd', 'vmovss', 'vmulss', 'vucomisd', 'vxorps', 'vzeroupper',
             'wait', 'wbinvd', 'wrmsr',
-            'xadd', 'xchg', 'xlat', 'xor', 'xorps'
+            'xadd', 'xchg', 'xlat', 'xor', 'xorps',
+
+            //
+            // Following ones are captured from x86 list, excluding the above:
+            // https://github.com/dotnet/runtime/blob/ea35f6aae9e1aac0e0c5de6df97e05bd992a7528/src/coreclr/src/jit/instrsxarch.h
+            //
+            // Note: this is still not the exhaustive list, as it is missing intrinsic instructions.
+            //
+            'addpd', 'addps', 'addsd', 'addss', 'addsubpd', 'addsubps', 'aesdec', 'aesdeclast', 'aesenc', 'aesenclast',
+            'aesimc', 'aeskeygenassist', 'align', 'andn', 'andnpd', 'andnps', 'andpd', 'andps', 'bextr', 'blendpd', 'blendps',
+            'blendvpd', 'blendvps', 'blsi', 'blsmsk', 'blsr', 'broadcastf128', 'broadcasti128', 'broadcastsd', 'broadcastss',
+            'bzhi', 'cmppd', 'cmpps', 'cmpss', 'comisd', 'comiss', 'crc32', 'cvtdq2pd', 'cvtdq2ps', 'cvtpd2dq', 'cvtpd2pi',
+            'cvtpd2ps', 'cvtpi2pd', 'cvtpi2ps', 'cvtps2dq', 'cvtps2pd', 'cvtps2pi', 'cvtsd2si', 'cvtsd2ss', 'cvtsi2sd', 'cvtsi2ss',
+            'cvtss2sd', 'cvtss2si', 'cvttpd2dq', 'cvttpd2pi', 'cvttps2dq', 'cvttps2pi', 'cvttsd2si', 'cvttss2si', 'divpd', 'divps',
+            'divsd', 'divss', 'dppd', 'dpps', 'extractf128', 'extracti128', 'extractps', 'fld', 'fmadd132pd', 'fmadd132ps', 'fmadd132sd',
+            'fmadd132ss', 'fmadd213pd', 'fmadd213ps', 'fmadd213sd', 'fmadd213ss', 'fmadd231pd', 'fmadd231ps', 'fmadd231sd', 'fmadd231ss',
+            'fmaddsub132pd', 'fmaddsub132ps', 'fmaddsub213pd', 'fmaddsub213ps', 'fmaddsub231pd', 'fmaddsub231ps', 'fmsub132pd', 'fmsub132ps',
+            'fmsub132sd', 'fmsub132ss', 'fmsub213pd', 'fmsub213ps', 'fmsub213sd', 'fmsub213ss', 'fmsub231pd', 'fmsub231ps', 'fmsub231sd',
+            'fmsub231ss', 'fmsubadd132pd', 'fmsubadd132ps', 'fmsubadd213pd', 'fmsubadd213ps', 'fmsubadd231pd', 'fmsubadd231ps', 'fnmadd132pd',
+            'fnmadd132ps', 'fnmadd132sd', 'fnmadd132ss', 'fnmadd213pd', 'fnmadd213ps', 'fnmadd213sd', 'fnmadd213ss', 'fnmadd231pd', 'fnmadd231ps',
+            'fnmadd231sd', 'fnmadd231ss', 'fnmsub132pd', 'fnmsub132ps', 'fnmsub132sd', 'fnmsub132ss', 'fnmsub213pd', 'fnmsub213ps', 'fnmsub213sd',
+            'fnmsub213ss', 'fnmsub231pd', 'fnmsub231ps', 'fnmsub231sd', 'fnmsub231ss', 'fstp', 'gatherdpd', 'gatherdps', 'gatherqpd', 'gatherqps',
+            'haddpd', 'haddps', 'hsubpd', 'hsubps', 'insertf128', 'inserti128', 'insertps', 'lddqu', 'lfence', 'lzcnt', 'maskmovdqu', 'maskmovpd',
+            'maskmovps', 'maxpd', 'maxps', 'maxsd', 'maxss', 'mfence', 'minpd', 'minps', 'minsd', 'minss', 'movapd', 'movaps', 'movd', 'movddup',
+            'movdqa', 'movdqu', 'movhlps', 'movhpd', 'movhps', 'movlhps', 'movlpd', 'movlps', 'movmskpd', 'movmskps', 'movntdq', 'movntdqa', 'movnti',
+            'movntpd', 'movntps', 'movq', 'movshdup', 'movsldup', 'movsq', 'movss', 'movupd', 'movups', 'mpsadbw', 'mulpd', 'mulps', 'mulsd', 'mulss',
+            'mulx', 'orpd', 'orps', 'pabsb', 'pabsd', 'pabsw', 'packssdw', 'packsswb', 'packusdw', 'packuswb', 'paddb', 'paddd', 'paddq', 'paddsb',
+            'paddsw', 'paddusb', 'paddusw', 'paddw', 'palignr', 'pand', 'pandn', 'pavgb', 'pavgw', 'pblendd', 'pblendvb', 'pblendw', 'pbroadcastb',
+            'pbroadcastd', 'pbroadcastq', 'pbroadcastw', 'pclmulqdq', 'pcmpeqb', 'pcmpeqd', 'pcmpeqq', 'pcmpeqw', 'pcmpgtb', 'pcmpgtd', 'pcmpgtq',
+            'pcmpgtw', 'pdep', 'perm2f128', 'perm2i128', 'permd', 'permilpd', 'permilpdvar', 'permilps', 'permilpsvar', 'permpd', 'permps', 'permq',
+            'pext', 'pextrb', 'pextrd', 'pextrq', 'pextrw', 'pgatherdd', 'pgatherdq', 'pgatherqd', 'pgatherqq', 'phaddd', 'phaddsw', 'phaddw', 'phminposuw',
+            'phsubd', 'phsubsw', 'phsubw', 'pinsrb', 'pinsrd', 'pinsrq', 'pinsrw', 'pmaddubsw', 'pmaddwd', 'pmaskmovd', 'pmaskmovq', 'pmaxsb', 'pmaxsd',
+            'pmaxsw', 'pmaxub', 'pmaxud', 'pmaxuw', 'pminsb', 'pminsd', 'pminsw', 'pminub', 'pminud', 'pminuw', 'pmovmskb', 'pmovsxbd', 'pmovsxbq',
+            'pmovsxbw', 'pmovsxdq', 'pmovsxwd', 'pmovsxwq', 'pmovzxbd', 'pmovzxbq', 'pmovzxbw', 'pmovzxdq', 'pmovzxwd', 'pmovzxwq', 'pmuldq', 'pmulhrsw',
+            'pmulhuw', 'pmulhw', 'pmulld', 'pmullw', 'pmuludq', 'popcnt', 'por', 'prefetchnta', 'prefetcht0', 'prefetcht1', 'prefetcht2', 'psadbw', 'pshufb',
+            'pshufd', 'pshufhw', 'pshuflw', 'psignb', 'psignd', 'psignw', 'pslld', 'pslldq', 'psllq', 'psllvd', 'psllvq', 'psllw', 'psrad', 'psravd', 'psraw',
+            'psrld', 'psrldq', 'psrlq', 'psrlvd', 'psrlvq', 'psrlw', 'psubb', 'psubd', 'psubq', 'psubsb', 'psubsw', 'psubusb', 'psubusw', 'psubw', 'ptest',
+            'punpckhbw', 'punpckhdq', 'punpckhqdq', 'punpckhwd', 'punpcklbw', 'punpckldq', 'punpcklqdq', 'punpcklwd', 'pxor', 'rcpps', 'rcpss', 'rex.jmp', 'rorx',
+            'roundpd', 'roundps', 'roundsd', 'roundss', 'rsqrtps', 'rsqrtss', 'sfence', 'shufpd', 'shufps', 'sqrtpd', 'sqrtps', 'sqrtsd', 'sqrtss', 'stosq',
+            'subpd', 'subps', 'subsd', 'subss', 'testpd', 'testps', 'tzcnt', 'ucomisd', 'ucomiss', 'unpckhpd', 'unpckhps', 'unpcklpd', 'unpcklps', 'xorpd',
+            'zeroupper'
             /* spellchecker: enable */
         ].join('|') + ')(?:$|\\s)')
     };
