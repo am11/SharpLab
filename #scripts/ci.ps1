@@ -18,13 +18,13 @@ Compress-Archive -Path "$serverPublishRoot/*" -DestinationPath "$SolutionRoot/Se
 Write-Output 'dotnet msbuild source/NetFramework/Server/Server.csproj /t:Publish ...'
 dotnet msbuild source/NetFramework/Server/Server.csproj /t:Publish /p:Configuration=Release /p:UnbreakablePolicyReportEnabled=false /verbosity:minimal
 if ($LastExitCode -ne 0) { throw "dotnet msbuild exited with code $LastExitCode" }
-$netfxPublishRoot = 'source/NetFramework/Server/bin/Release/net47/publish'
+$netfxPublishRoot = 'source/NetFramework/Server/bin/publish'
 Write-Output "Compress-Archive -Path $netfxPublishRoot/* -DestinationPath $SolutionRoot/Server.NetFramework.zip"
 Compress-Archive -Path "$netfxPublishRoot/*" -DestinationPath "$SolutionRoot/Server.NetFramework.zip"
 
-Write-Output 'dotnet publish source/WebApp/WebApp.csproj ...'
-dotnet publish source/WebApp/WebApp.csproj -c Release --no-build --no-restore
+Write-Output 'dotnet publish source/WebApp.Server/WebApp.Server.csproj ...'
+dotnet publish source/WebApp.Server/WebApp.Server.csproj -c Release --no-build --no-restore
 if ($LastExitCode -ne 0) { throw "dotnet publish exited with code $LastExitCode" }
-$webAppPublishRoot = 'source/WebApp/bin/Release/net5.0/publish'
-Write-Output "Compress-Archive -Path $webAppPublishRoot/* -DestinationPath $SolutionRoot/WebApp.zip"
-Compress-Archive -Path "$webAppPublishRoot/*" -DestinationPath "$SolutionRoot/WebApp.zip"
+$webAppPublishRoot = 'source/WebApp.Server/bin/Release/net5.0/publish'
+Write-Output "Compress-Archive -Path $webAppPublishRoot/* -DestinationPath $SolutionRoot/WebApp.Server.zip"
+Compress-Archive -Path "$webAppPublishRoot/*" -DestinationPath "$SolutionRoot/WebApp.Server.zip"
