@@ -1,7 +1,0 @@
-{
-  "name": "update-mod-asm",
-  "version": "0.0.0",
-  "dependencies": {
-    "regex-combiner": "^1.0.1"
-  }
-}
